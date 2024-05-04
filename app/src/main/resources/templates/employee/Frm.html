@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <title>Formulario de Empleados</title>
+    </head>
+    <body>
+        <div class="container">
+
+
+            <h1 th:text="${employees.employeeid==0? 'Nuevo Empleado':'Editar Empleado'}">Titulo</h1>
+            <form th:action="@{'/employee/save'}" method="post" th:object="${employees}">
+                <input th:field="*{employeeid}" type="hidden"/>
+                <div class="row">
+                    <div class="mb-3 col-sm-6">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" th:field="*{firstname}"
+                               >
+                        <div id="validationServer03Feedback" class="invalid-feedback"
+                             >
+                            Mensaje de error
+                        </div>
+                    </div>
+                    <div class="mb-3 col-sm-6">
+                        <label class="form-label">Apellido</label>
+                        <input type="text" class="form-control" th:field="*{lastname}"
+                               >
+                        <div id="validationServer03Feedback" class="invalid-feedback"
+                            >
+                            Mensaje de error
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-sm-6">
+                        <label class="form-label">Correo</label>
+                        <input type="text" class="form-control" th:field="*{email}"
+                               >
+
+                    </div>
+                    <div class="mb-3 col-sm-6">
+                        <label class="form-label">Contraseña</label>
+                        <input type="text" class="form-control" th:field="*{password}"
+
+                               autocomplete="current-password" th:value="${employees.password}" />
+
+                        <div id="validationServer03Feedback" class="invalid-feedback"
+                            >
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-sm-6">
+                        <label class="form-label">Cargo</label>
+                        <select class="form-control" th:field="*{jobid}">
+                            <option th:each="job : ${listaJobs}"
+                                    th:value="${job.jobId}" th:text="${job.jobtitle}"></option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3 col-sm-6">
+                        <label class="form-label">Sueldo</label>
+                        <input type="number" class="form-control" th:field="*{salary}"
+                              >
+                        <div id="validationServer03Feedback" class="invalid-feedback"
+                             >
+                            Mensaje de error
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="mb-3 col-sm-6">
+                        <label class="form-label">Jefe</label>
+                        <select class="form-control" th:field="*{managerid}">
+                            <option th:each="jefe : ${listaJefes}" 
+                                    th:value="${jefe.employeeid}" th:text="${jefe.firstname + ' ' + jefe.lastname}"></option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3 col-sm-6">
+                        <label class="form-label">Departamento</label>
+                        <select class="form-control" th:field="*{departmentid}">
+                            <option th:each="dep : ${listaDepartments}" 
+                                    th:value="${dep.departmentId}" th:text="${dep.departmentname}"></option>
+                        </select>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-sm-12">
+                        <a th:href="@{'/employee'}" class="btn btn-danger">Cancelar</a>
+                        <button type="submit" class="btn btn-primary"
+                                th:text="${employees.employeeid==0? 'Registrar':'Actualizar'}">Registrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

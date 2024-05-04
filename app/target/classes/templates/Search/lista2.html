@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <title>Empleados con Mayor Salario</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Empleados con Mayor Salario en la Empresa</h1>
+
+            <form method="post" action="/Search/busqueda">
+                <div class="row">
+                    <div class="mb-3 col-sm-6">
+                        <input type="number" class="form-control" name="salario"  th:value="${salario}" placeholder="Salario a buscar"  />
+                    </div>
+                    <div class="mb-3 col-sm-3">
+                        <button type="submit" class="btn btn-outline-primary">Buscar</button>
+                        <a th:href="@{'/Search/Salario'}" class="btn btn-outline-danger">Limpiar</a>
+                        <a th:href="@{'/Search'}" class="btn btn-primary">Regresar</a>
+                    </div>
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Puesto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${employees}">
+                        <td th:text="${item.employeeid.firstname}"></td>
+                        <td th:text="${item.employeeid.lastname}"></td>
+                        <td th:text="${#dates.format(item.hiredate,'dd-MM-YYYY')}"></td>
+                        <td th:text="${#dates.format(item.enddate,'dd-MM-YYYY')}"></td>
+                        <td th:text="${item.employeeid.jobid != null ? item.employeeid.jobid.jobtitle : ''}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
